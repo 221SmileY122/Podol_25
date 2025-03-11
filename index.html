@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор Подолецкой</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="loading-screen">
+        <img src="logo.png" alt="Логотип" class="logo">
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+        </div>
+        <p class="loading-text">Загрузка...</p>
+    </div>
+
+    <header>
+        <nav>
+            <button class="nav-button" data-action="iq_test">IQ и возбужденность</button>
+            <button class="nav-button" data-action="AUX">Тест Подолецкой</button>
+            <button class="nav-button" data-action="show_random_iq">Узнать свой настоящий IQ сегодня</button>
+            <button class="nav-button" data-action="write_to_podoletskaya">Написать Подолецкой</button>
+        </nav>
+        <button class="get-started-button">Get Started</button>
+    </header>
+
+    <main>
+        <div class="left-frame">
+            <div class="text-box">
+                <p>Данный тест предназначен для лиц строго старше 18 лет и соответствующих всем требованиям Подолецко-нометра, а именно:
+                    1) 18 лет
+                    2) Вы дуреете от Подолецкой
+                    3) Вам не жалко провести время с Подолецкой в душе</p>
+            </div>
+            <div class="button-container">
+                <button class="main-button" data-action="iq_test">IQ и возбужденность</button>
+                <button class="main-button" data-action="AUX">Тест Подолецкой</button>
+            </div>
+        </div>
+
+        <div class="right-frame">
+            <h2>Дополнительные опции:</h2>
+            <ul class="options-list">
+                <li><button class="option-button" data-action="show_random_iq">Узнать свой настоящий IQ сегодня</button></li>
+                <li><button class="option-button" data-action="write_to_podoletskaya">Написать Подолецкой</button></li>
+                <li><button class="option-button" data-action="open_chat_with_podoletskaya">Чат с Подолецкой</button></li>
+                <li><button class="option-button" data-action="mini_game">Мини-игра: Найди Подолецкую</button></li>
+                <li><button class="option-button" data-action="open_fandom">Открыть Fandom</button></li>
+                <li><button class="option-button" data-action="toggle_music">Включить/Выключить музыку</button></li>
+            </ul>
+        </div>
+    </main>
+
+    <div class="background-animation"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Loading screen
+            const loadingScreen = document.querySelector('.loading-screen');
+            const progressBar = document.querySelector('.progress-bar');
+            const loadingText = document.querySelector('.loading-text');
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+                loadingText.innerText = `Загрузка... ${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        document.body.style.overflow = 'auto'; // Restore scrollbars
+                    }, 500);
+                }
+            }, 30); // Adjust the interval to control the loading speed
+
+            // Function to open a popup window
+            function openPopupWindow(content) {
+                const popupWindow = document.createElement('div');
+                popupWindow.classList.add('popup-window');
+                popupWindow.innerHTML = `
+                    <h2>${content.title}</h2>
+                    ${content.body}
+                    <button class="close-button">Закрыть</button>
+                `;
+                document.body.appendChild(popupWindow);
+
+                const closeButton = popupWindow.querySelector('.close-button');
+                closeButton.addEventListener('click', () => {
+                    popupWindow.remove();
+                });
+            }
+
+            // Event listeners for buttons
+            document.querySelectorAll('.nav-button, .main-button, .option-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.dataset.action;
+
+                    switch (action) {
+                        case 'iq_test':
+                            openPopupWindow({
+                                title: 'IQ и возбужденность',
+                                body: `
+                                    <label>Введите количество вашего IQ сегодня:</label>
+                                    <input type="number" id="iq_value"><br>
+                                    <label>Введите уровень вашей возбужденности сегодня в %:</label>
+                                    <input type="number" id="excitement_level"><br>
+                                    <button onclick="calculateIQ()">Рассчитать</button>
+                                `
+                            });
+                            break;
+                        case 'AUX':
+                            openPopupWindow({
+                                title: 'Тест Подолецкой',
+                                body: `
+                                    <label>Введите ваш желанный IQ для инициализации теста Подолецкой:</label>
+                                    <input type="number" id="desired_iq"><br>
+                                    <button onclick="startQuiz()">Начать</button>
+                                `
+                            });
+                            break;
+                        case 'show_random_iq':
+                            getRandomIQ();
+                            break;
+                        case 'write_to_podoletskaya':
+                            writeToPodoletskaya();
+                            break;
+                        case 'open_chat_with_podoletskaya':
+                            openChatWithPodoletskaya();
+                            break;
+                        case 'mini_game':
+                            // Placeholder for mini_game functionality
+                            alert('Функциональность "Мини-игра: Найди Подолецкую"');
+                            break;
+                        case 'open_fandom':
+                            window.open('https://www.fandom.com', '_blank');
+                            break;
+                        case 'toggle_music':
+                            // Placeholder for toggle_music functionality
+                            alert('Функциональность "Включить/Выключить музыку"');
+                            break;
+                        default:
+                            alert('Действие не определено');
+                    }
+                });
+            });
+
+            window.calculateIQ = function() {
+                const iqValue = document.getElementById('iq_value').value;
+                const excitementLevel = document.getElementById('excitement_level').value;
+
+                fetch('/calculate_iq', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `iq_value=${iqValue}&excitement_level=${excitementLevel}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.result);
+                });
+            };
+
+            window.startQuiz = function() {
+                const desiredIQ = document.getElementById('desired_iq').value;
+
+                fetch('/start_quiz', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `desired_iq=${desiredIQ}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.quiz) {
+                        alert('Начать викторину');
+                    } else {
+                        alert('IQ слишком низкий');
+                    }
+                });
+            };
+
+            function getRandomIQ() {
+                const name = prompt("Введите ваше имя:");
+                fetch(`/show_random_iq?name=${name}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(`${data.name}, ваш IQ сегодня: ${data.iq} 🧠\nНаслаждайтесь!`);
+                    });
+            }
+
+            function writeToPodoletskaya() {
+                fetch('/write_to_podoletskaya')
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                    });
+            }
+
+            function openChatWithPodoletskaya() {
+                const userMessage = prompt("Введите ваше сообщение:");
+                if (userMessage) {
+                    fetch('/chat_with_podoletskaya', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `user_message=${userMessage}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(`Вы: ${data.user_message}\nПодолецкая: ${data.podoletskaya_response}`);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

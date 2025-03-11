@@ -1,0 +1,188 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFFFE0;
+    color: #0F0F0F;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide scrollbars */
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFE0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-screen .logo {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.loading-screen .progress-bar-container {
+    width: 400px;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.loading-screen .progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #5E81AC;
+    border-radius: 5px;
+}
+
+.loading-screen .loading-text {
+    font-size: 16px;
+    color: #0F0F0F;
+}
+
+
+header {
+    background-color: rgba(255, 255, 224, 0.8);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.nav-button, .get-started-button, .main-button, .option-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #5E81AC;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover, .get-started-button:hover, .main-button:hover, .option-button:hover {
+    background-color: #4C566A;
+}
+
+.get-started-button {
+    font-size: 20px;
+    padding: 15px 30px;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.left-frame, .right-frame {
+    width: 45%;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.left-frame {
+    background-color: rgba(255, 255, 224, 0.7);
+}
+
+.right-frame {
+    background-color: rgba(255, 255, 224, 0.7);
+}
+
+.text-box {
+    background-color: #4C566A;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.text-box p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.options-list {
+    list-style: none;
+    padding: 0;
+}
+
+.options-list li {
+    margin-bottom: 10px;
+}
+
+/* Background Animation */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://source.unsplash.com/random/1920x1080') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+/* Styles for pop-up windows */
+.popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    display: none;
+}
+
+.popup-window h2 {
+    margin-top: 0;
+}
+
+.popup-window input[type="text"],
+.popup-window input[type="number"] {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.popup-window button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #5E81AC;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.popup-window button:hover {
+    background-color: #4C566A;
+}
